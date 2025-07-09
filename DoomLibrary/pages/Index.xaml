@@ -1,0 +1,23 @@
+﻿<Page x:Class="DoomLibrary.pages.Index"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DoomLibrary.pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Index">
+
+    <Grid Background="LightGray">
+        <Border Padding="10">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Image Width="50" Height="50">
+                    <Image.Source>
+                        <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_add.png"/>
+                    </Image.Source>
+                </Image>
+                <TextBlock Text="You haven't set the mods directory&#x0a;Go to config to set it up" TextAlignment="Center" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
