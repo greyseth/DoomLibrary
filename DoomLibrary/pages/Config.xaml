@@ -52,7 +52,7 @@
 
                         <TextBlock Text="Source Ports" FontWeight="Bold" Margin="0 0 0 10" />
 
-                        <Button Content="+ Add Source Port" Margin="0 0 0 10" Click="AddSourcePort" x:Name="btn_addSourcePort"/>
+                        <Button Content="+ Add Source Port" Margin="0 0 0 10" x:Name="btn_addSourcePort"/>
 
                         <TextBlock Text="No Source Ports Added" TextAlignment="Center" x:Name="display_noSourcePort" />
                         <ListView x:Name="list_sourcePorts" Background="Transparent" ItemsSource="{Binding SourcePorts}" HorizontalContentAlignment="Stretch">
@@ -67,7 +67,7 @@
 
                                         <TextBox Width="Auto" IsReadOnly="True" Text="{Binding Path, Mode=OneWay}" Grid.Column="0" />
                                         <Button Content="..." Padding="5 0 5 0" Margin="5 0 0 0" Grid.Column="1" Click="SetSourcePort" />
-                                        <Button Content="Remove" Padding="5 0 5 0" Margin="5 0 0 0" Grid.Column="2" />
+                                        <Button Content="Remove" Padding="5 0 5 0" Margin="5 0 0 0" Grid.Column="2" Click="RemoveSourcePort" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>

@@ -11,6 +11,8 @@ namespace DoomLibrary.model
         public string Path { get; set; }
         public int Index { get; set; }
 
+        public SourcePort() { }
+
         public SourcePort(string path)
         {
             this.Path = path;

@@ -10,7 +10,7 @@
 
     <Grid Background="LightGray">
         <Border Padding="10">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="display_noFolder">
                 <Image Width="50" Height="50">
                     <Image.Source>
                         <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_add.png"/>

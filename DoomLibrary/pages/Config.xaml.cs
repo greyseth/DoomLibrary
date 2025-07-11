@@ -15,6 +15,7 @@ using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using DoomLibrary.model;
+using System.Text.Json;
 
 namespace DoomLibrary.pages
 {
@@ -33,8 +34,6 @@ namespace DoomLibrary.pages
             get { return sourcePorts; }
             set { sourcePorts = value; }
         }
-
-
         public Config()
         {
             DataContext = this;
@@ -42,14 +41,16 @@ namespace DoomLibrary.pages
 
             InitializeComponent();
 
-            sourcePorts.Add(new SourcePort("Hello there"));
-            sourcePorts.Add(new SourcePort("you were my brother, Anakin"));
-            sourcePorts.Add(new SourcePort("I hate you"));
-
-            modsLocation = Properties.Settings.Default.modslocation;
-            wadsLocation = Properties.Settings.Default.wadslocation;
+            SettingsObject so = Settings.savedSettings;
+            modsLocation = so.modsLocation;
+            wadsLocation = so.wadsLocation;
+            foreach(SourcePort sp in so.sourcePorts)
+            {
+                sourcePorts.Add(sp);
+            }
 
             UpdateLocations();
+            UpdateList();
 
             btn_modsLocation.Click += SetModsLocation;
             btn_wadsLocation.Click += SetWadsLocation;
@@ -62,6 +63,12 @@ namespace DoomLibrary.pages
         {
             if (modsLocation != "") display_modsLocation.Text = modsLocation;
             if (wadsLocation != "") display_wadsLocation.Text = wadsLocation;
+        }
+
+        private void UpdateList()
+        {
+            if (sourcePorts.Count < 1) display_noSourcePort.Visibility = Visibility.Visible;
+            else display_noSourcePort.Visibility = Visibility.Hidden;
         }
 
         private void SetModsLocation(object sender, RoutedEventArgs e)
@@ -90,7 +97,9 @@ namespace DoomLibrary.pages
 
         private void AddSourcePort(object sender, RoutedEventArgs e)
         {
-            
+            sourcePorts.Add(new SourcePort("Not Set"));
+
+            UpdateList();
         }
 
         private void SetSourcePort(object sender, RoutedEventArgs e)
@@ -115,6 +124,24 @@ namespace DoomLibrary.pages
                     sourcePorts.Insert(listIndex, selectedObject);
                 }
             }
+        }
+
+        private void RemoveSourcePort(object sender, RoutedEventArgs e)
+        {
+            int selectedIndex = ((sender as FrameworkElement).DataContext as SourcePort).Index;
+            SourcePort selectedObject = null;
+            foreach (SourcePort sp in sourcePorts)
+            {
+                if (sp.Index == selectedIndex) selectedObject = sp;
+            }
+
+            if (selectedObject != null)
+            {
+                int listIndex = sourcePorts.IndexOf(selectedObject);
+                sourcePorts.RemoveAt(listIndex);
+            }
+
+            UpdateList();
         }
 
         private void SaveSettings(object sender, RoutedEventArgs e)

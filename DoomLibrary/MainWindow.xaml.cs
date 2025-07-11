@@ -23,6 +23,8 @@ namespace DoomLibrary
         public MainWindow()
         {
             InitializeComponent();
+
+            Settings.LoadSettings();
         }
 
         private void ToIndex(object sender, RoutedEventArgs e)
