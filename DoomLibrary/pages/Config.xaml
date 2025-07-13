@@ -44,7 +44,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Text="WADs Folder" Margin="0 0 10 0" Grid.Column="0"/>
+                                <TextBlock Text="IWADs Folder" Margin="0 0 10 0" Grid.Column="0"/>
                                 <TextBox Width="Auto" IsReadOnly="True" Text="Not Set" Grid.Column="1" x:Name="display_wadsLocation" />
                                 <Button Content="..." Padding="5 0 5 0" Grid.Column="2" x:Name="btn_wadsLocation" />
                             </Grid>

@@ -1,0 +1,33 @@
+[33mcommit 5537c9dc3dbd50f55d77e674bff1e0b2e2e0f0d9[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: greyseth <anargya2gilland@gmail.com>
+Date:   Wed Jul 9 15:44:28 2025 +0700
+
+    Add project files.
+
+:000000 100644 0000000 9f44edc A	DoomLibrary.sln
+:000000 100644 0000000 cc7fb3d A	DoomLibrary/App.xaml
+:000000 100644 0000000 282aae8 A	DoomLibrary/App.xaml.cs
+:000000 100644 0000000 8b5504e A	DoomLibrary/AssemblyInfo.cs
+:000000 100644 0000000 48039db A	DoomLibrary/DoomLibrary.csproj
+:000000 100644 0000000 ff4e9e1 A	DoomLibrary/MainWindow.xaml
+:000000 100644 0000000 3d95b5a A	DoomLibrary/MainWindow.xaml.cs
+:000000 100644 0000000 fec60ce A	DoomLibrary/Properties/Settings.Designer.cs
+:000000 100644 0000000 1ae8379 A	DoomLibrary/Properties/Settings.settings
+:000000 100644 0000000 7654f97 A	DoomLibrary/Settings.cs
+:000000 100644 0000000 0ff917e A	DoomLibrary/components/ConfigContent.xaml
+:000000 100644 0000000 668ecb6 A	DoomLibrary/components/ConfigContent.xaml.cs
+:000000 100644 0000000 e48458e A	DoomLibrary/img/icon_add.png
+:000000 100644 0000000 81d8039 A	DoomLibrary/model/SourcePort.cs
+:000000 100644 0000000 c433aac A	DoomLibrary/pages/Config.xaml
+:000000 100644 0000000 afe4ae8 A	DoomLibrary/pages/Config.xaml.cs
+:000000 100644 0000000 cf65006 A	DoomLibrary/pages/Index.xaml
+:000000 100644 0000000 d98b0b1 A	DoomLibrary/pages/Index.xaml.cs
+
+[33mcommit a48854646a0deac96d86648c91b2dc987c2c1051[m
+Author: greyseth <anargya2gilland@gmail.com>
+Date:   Wed Jul 9 15:44:26 2025 +0700
+
+    Add .gitignore and .gitattributes.
+
+:000000 100644 0000000 1ff0c42 A	.gitattributes
+:000000 100644 0000000 9491a2f A	.gitignore
