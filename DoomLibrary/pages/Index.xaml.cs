@@ -24,7 +24,7 @@ namespace DoomLibrary.pages
     /// </summary>
     public partial class Index : Page
     {
-        private ObservableCollection<Mod> mods;
+        private ObservableCollection<Mod> mods; // list of mods to be rendered
 
         public ObservableCollection<Mod> Mods
         {
@@ -32,10 +32,12 @@ namespace DoomLibrary.pages
             set { mods = value; }
         }
 
+        bool showHidden = false;
+
         public Index()
         {
             DataContext = this;
-            mods = new ObservableCollection<Mod>();  
+            mods = new ObservableCollection<Mod>();
 
             InitializeComponent();
 
@@ -46,6 +48,24 @@ namespace DoomLibrary.pages
                 if (e.Key == Key.Enter) SearchMods(null, null);
             };
             btn_search.Click += SearchMods;
+
+            btn_refreshList.Click += (object sender, RoutedEventArgs e) => ReadModsDir();
+            
+            btn_showHidden.Click += (object sender, RoutedEventArgs e) =>
+            {
+                showHidden = !showHidden;
+                if (showHidden) btn_showHidden.Content = "Hide Hidden";
+                else btn_showHidden.Content = "Show Hidden";
+
+                ReadModsDir();
+            };
+
+            btn_unapplyAll.Click += (object sender, RoutedEventArgs e) =>
+            {
+                foreach (Mod mod in ModsManager.allMods) mod.LoadOrder = 0;
+                foreach (Mod mod in mods) mod.LoadOrder = 0;
+                ModsManager.lastLoadOrder = 0;
+            };
         }
 
         void ReadModsDir()
@@ -60,24 +80,27 @@ namespace DoomLibrary.pages
             var filesEnumerated = Directory.EnumerateFiles(Settings.savedSettings.modsLocation, "*.*", SearchOption.AllDirectories);
             var files = filesEnumerated.Where(f => f.EndsWith(".wad") || f.EndsWith(".pk3")).ToList();
 
+            display_noMods.Visibility = Visibility.Collapsed;
+            container_listMods.Visibility = Visibility.Collapsed;
+            
             if (mods.Count > 0) mods.Clear();
             foreach (string file in files)
             {
                 string[] fileSplit = file.Split("\\");
                 string modName = fileSplit[^1]; // fileSplit.Length - 1
-                mods.Add(new Mod(modName, ModsManager.GetLoadOrder(modName), ModsManager.IsHidden(modName))); // TODO: Write new implementation to show only non-hidden mods
+
+                Mod newMod = new Mod(modName, ModsManager.GetLoadOrder(modName), ModsManager.IsHidden(modName));
+                if (ModsManager.allMods.FindIndex(m => m.name == modName) == -1) ModsManager.allMods.Add(newMod);
+                if (!showHidden)
+                {
+                    if (!ModsManager.IsHidden(modName)) mods.Add(newMod);
+                }
+                else mods.Add(newMod);
             }
 
-            if (mods.Count > 0)
-            {
-                container_listMods.Visibility = Visibility.Visible;
-                display_modsLocation.Text = "Reading from folder " + Settings.savedSettings.modsLocation;
-            }
-            else
-            {
-                display_noMods.Visibility = Visibility.Visible;
-                display_noMods.Text = "No Mods Found on " + Settings.savedSettings.modsLocation;
-            }
+            UpdateModsCount();
+
+            if (input_search.Text != "") SearchMods(null, null);
         }
 
         void ToggleMod(object sender, RoutedEventArgs e)
@@ -88,12 +111,21 @@ namespace DoomLibrary.pages
             if (checkbox.IsChecked == true) ModsManager.ApplyMod(mod.name);
             else ModsManager.RemoveMod(mod.name);
 
-            Trace.WriteLine(System.Text.Json.JsonSerializer.Serialize(ModsManager.appliedMods));
+            Trace.WriteLine(System.Text.Json.JsonSerializer.Serialize(ModsManager.allMods));
         }
 
         void ToggleHidden(object sender, RoutedEventArgs e)
         {
             Mod mod = (sender as FrameworkElement).DataContext as Mod;
+            Mod foundMod = ModsManager.allMods[ModsManager.allMods.FindIndex(m => m.name == mod.name)];
+            foundMod.Hidden = !foundMod.Hidden;
+            mod.Hidden = foundMod.Hidden;
+
+            if (!showHidden && mod.Hidden == true)
+            {
+                mods.Remove(mod);
+                UpdateModsCount();
+            }
         }
 
         void SearchMods(object sender, RoutedEventArgs e)
@@ -105,7 +137,7 @@ namespace DoomLibrary.pages
             if (query == "") ReadModsDir();
             else
             {
-                ObservableCollection<Mod> filteredMods = new ObservableCollection<Mod>(mods.Where(m => m.name.ToLower().Contains(query.ToLower())));
+                ObservableCollection<Mod> filteredMods = new ObservableCollection<Mod>(ModsManager.allMods.Where(m => m.name.ToLower().Contains(query.ToLower()) && (showHidden || !m.Hidden)));
                 mods.Clear();
                 foreach(Mod mod in filteredMods)
                 {
@@ -118,6 +150,20 @@ namespace DoomLibrary.pages
                     display_noMods.Visibility = Visibility.Visible;
                     display_noMods.Text = "Could not find results for '" + query + "'";
                 }
+            }
+        }
+
+        void UpdateModsCount()
+        {
+            if (mods.Count > 0)
+            {
+                container_listMods.Visibility = Visibility.Visible;
+                display_modsLocation.Text = "Reading from folder " + Settings.savedSettings.modsLocation;
+            }
+            else
+            {
+                display_noMods.Visibility = Visibility.Visible;
+                display_noMods.Text = "No Mods Found on " + Settings.savedSettings.modsLocation;
             }
         }
     }

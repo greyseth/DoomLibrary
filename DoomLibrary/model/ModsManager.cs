@@ -7,37 +7,46 @@ namespace DoomLibrary.model
 {
     class ModsManager
     {
-        public static Dictionary<string, int> appliedMods = new Dictionary<string, int>();
-        public static List<string> hiddenMods = new List<string>();
-        public static bool showHidden = false;
+        public static List<Mod> allMods = new List<Mod>();
+        public static int lastLoadOrder = 0;
 
         public static void ApplyMod(string mod)
         {
-            appliedMods.Add(mod, appliedMods.Count + 1);
+            int modIndex = allMods.FindIndex(m => m.name == mod);
+            if (modIndex != -1) allMods[modIndex].LoadOrder = lastLoadOrder + 1;
+            lastLoadOrder++;
         }
 
         public static void RemoveMod(string mod)
         {
-            appliedMods.Remove(mod);
+            int modIndex = allMods.FindIndex(m => m.name == mod);
+            int prevLoadOrder = allMods[modIndex].LoadOrder;
+            if (modIndex != -1) allMods[modIndex].LoadOrder = 0;
 
-            string[] appliedModsKeys = appliedMods.Keys.ToArray();
-            int i = 1;
-            foreach (string key in appliedModsKeys)
+            int biggestModifiedLoadOrder = 0;
+            foreach (Mod aMod in allMods)
             {
-                appliedMods[key] = i;
-                i++;
-
+                if (aMod.LoadOrder > prevLoadOrder)
+                {
+                    aMod.LoadOrder -= 1;
+                    if (aMod.LoadOrder > biggestModifiedLoadOrder) biggestModifiedLoadOrder = aMod.LoadOrder;
+                }
             }
+
+            lastLoadOrder = biggestModifiedLoadOrder;
         }
 
         public static int GetLoadOrder(string mod)
         {
-            return appliedMods.ContainsKey(mod) ? appliedMods[mod] : -1;
+            int modIndex = allMods.FindIndex(m => m.name == mod);
+            if (modIndex != -1) return allMods[modIndex].LoadOrder;
+            else return 0;
         }
 
         public static bool IsHidden(string mod)
         {
-            if (hiddenMods.FindIndex(m => m == mod) != -1) return true;
+            int modIndex = allMods.FindIndex(m => m.name == mod);
+            if (modIndex != -1) return allMods[modIndex].Hidden;
             else return false;
         }
     }
