@@ -36,5 +36,10 @@ namespace DoomLibrary
         {
             AppContent.Navigate(new Uri("/pages/config.xaml", UriKind.Relative));
         }
+
+        private void ToWads(object sender, RoutedEventArgs e)
+        {
+            AppContent.Navigate(new Uri("/pages/wads.xaml", UriKind.Relative));
+        }
     }
 }

@@ -22,7 +22,7 @@
                         </Style>
                     </StackPanel.Resources>
                     <Button Content="Mods" Click="ToIndex" />
-                    <Button Content="WADs" />
+                    <Button Content="WADs" Click="ToWads" />
                     <Button Content="Mod Collections" />
                     <Button Content="Config" Click="ToConfig" />
                 </StackPanel>

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 
 namespace DoomLibrary.model
 {
@@ -48,6 +50,38 @@ namespace DoomLibrary.model
             int modIndex = allMods.FindIndex(m => m.name == mod);
             if (modIndex != -1) return allMods[modIndex].Hidden;
             else return false;
+        }
+
+        public static void SaveMods()
+        {
+            string serialized = JsonSerializer.Serialize(new ModsManagerSerializer(allMods, lastLoadOrder));
+            File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "\\mods.json", serialized);
+        }
+
+        public static void LoadMods()
+        {
+            ModsManagerSerializer deserialized = new ModsManagerSerializer(new List<Mod>(), 0);
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\mods.json"))
+            {
+                string json = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "\\config.json");
+                deserialized = JsonSerializer.Deserialize<ModsManagerSerializer>(json);
+            }
+
+            allMods = deserialized.allMods;
+            lastLoadOrder = deserialized.lastLoadOrder;
+        }
+    }
+
+    class ModsManagerSerializer {
+        public List<Mod> allMods;
+        public int lastLoadOrder;
+
+        public ModsManagerSerializer() { }
+
+        public ModsManagerSerializer(List<Mod> allMods, int lastLoadOrder)
+        {
+            this.allMods = allMods;
+            this.lastLoadOrder = lastLoadOrder;
         }
     }
 }
