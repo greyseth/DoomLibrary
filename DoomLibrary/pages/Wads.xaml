@@ -8,9 +8,263 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="Wads">
 
-    <Grid Background="LightGray">
-        <Border Padding="10">
-            
-        </Border>
-    </Grid>
+    <ScrollViewer>
+        <Grid Background="LightGray">
+            <Border Padding="10">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="Available IWADs" FontSize="25" FontWeight="Bold" Margin="0 0 0 10" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="15" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <!--Doom 1-->
+                        <Border Padding="10 0 10 0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="25" />
+                                </Grid.RowDefinitions>
+                                <Image Height="Auto" Margin="0 0 0 10" Grid.Row="0">
+                                    <Image.Source>
+                                        <BitmapImage DecodePixelWidth="100" UriSource="../img/img_doom.jpg"/>
+                                    </Image.Source>
+                                </Image>
+                                <StackPanel Grid.Row="1" Margin="0 0 0 10" VerticalAlignment="Center">
+                                    <TextBlock Text="doom.wad" HorizontalAlignment="Center" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 10" x:Name="display_doom1">
+                                        <TextBlock Text="IWAD found" />
+                                        <Image Width="25" Height="15">
+                                            <Image.Source>
+                                                <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_check.png"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button Content="Select" x:Name="btn_doom1" Grid.Row="2" />
+                            </Grid>
+                        </Border>
+
+                        <!--Doom 2-->
+                        <Border Padding="10 0 10 0" Grid.Column="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="25" />
+                                </Grid.RowDefinitions>
+                                <Image Height="Auto" Margin="0 0 0 10" Grid.Row="0">
+                                    <Image.Source>
+                                        <BitmapImage DecodePixelWidth="100" UriSource="../img/img_doom2.png"/>
+                                    </Image.Source>
+                                </Image>
+                                <StackPanel Grid.Row="1" Margin="0 0 0 10" VerticalAlignment="Center">
+                                    <TextBlock Text="doom2.wad" HorizontalAlignment="Center" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 10" x:Name="display_doom2">
+                                        <TextBlock Text="IWAD found" />
+                                        <Image Width="25" Height="15">
+                                            <Image.Source>
+                                                <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_check.png"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button Content="Select" x:Name="btn_doom2" Grid.Row="2" />
+                            </Grid>
+                        </Border>
+                        
+                        <!--TNT Evilution-->
+                        <Border Padding="10 0 10 0" Grid.Column="2">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="25" />
+                                </Grid.RowDefinitions>
+                                <Image Height="Auto" Margin="0 0 0 10" Grid.Row="0">
+                                    <Image.Source>
+                                        <BitmapImage DecodePixelWidth="100" UriSource="../img/img_finaldoom.png"/>
+                                    </Image.Source>
+                                </Image>
+                                <StackPanel Grid.Row="1" Margin="0 0 0 10" VerticalAlignment="Center" x:Name="display_tnt">
+                                    <TextBlock Text="tnt.wad" HorizontalAlignment="Center" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 10">
+                                        <TextBlock Text="IWAD found" />
+                                        <Image Width="25" Height="15">
+                                            <Image.Source>
+                                                <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_check.png"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button Content="Select" Grid.Row="2" x:Name="btn_tnt" />
+                            </Grid>
+                        </Border>
+
+                        <!--Plutonia Experiment-->
+                        <Border Padding="10 0 10 0" Grid.Column="3">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="25" />
+                                </Grid.RowDefinitions>
+                                <Image Height="Auto" Margin="0 0 0 10" Grid.Row="0">
+                                    <Image.Source>
+                                        <BitmapImage DecodePixelWidth="100" UriSource="../img/img_finaldoom.png"/>
+                                    </Image.Source>
+                                </Image>
+                                <StackPanel Grid.Row="1" Margin="0 0 0 10" VerticalAlignment="Center" x:Name="display_plutonia">
+                                    <TextBlock Text="plutonia.wad" HorizontalAlignment="Center" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 10">
+                                        <TextBlock Text="IWAD found" />
+                                        <Image Width="25" Height="15">
+                                            <Image.Source>
+                                                <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_check.png"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button Content="Select" Grid.Row="2" x:Name="btn_plutonia" />
+                            </Grid>
+                        </Border>
+
+                        <!--Heretic-->
+                        <Border Padding="10 0 10 0" Grid.Column="0" Grid.Row="2">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="25" />
+                                </Grid.RowDefinitions>
+                                <Image Height="Auto" Margin="0 0 0 10" Grid.Row="0">
+                                    <Image.Source>
+                                        <BitmapImage DecodePixelWidth="100" UriSource="../img/img_heretic.png"/>
+                                    </Image.Source>
+                                </Image>
+                                <StackPanel Grid.Row="1" Margin="0 0 0 10" VerticalAlignment="Center">
+                                    <TextBlock Text="heretic.wad" HorizontalAlignment="Center" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 10" x:Name="display_heretic">
+                                        <TextBlock Text="IWAD found" />
+                                        <Image Width="25" Height="15">
+                                            <Image.Source>
+                                                <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_check.png"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button Content="Select" Grid.Row="2" x:Name="btn_heretic" />
+                            </Grid>
+                        </Border>
+
+                        <!--HeXen-->
+                        <Border Padding="10 0 10 0" Grid.Column="1" Grid.Row="2">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="25" />
+                                </Grid.RowDefinitions>
+                                <Image Height="Auto" Margin="0 0 0 10" Grid.Row="0">
+                                    <Image.Source>
+                                        <BitmapImage DecodePixelWidth="100" UriSource="../img/img_hexen.jpg"/>
+                                    </Image.Source>
+                                </Image>
+                                <StackPanel Grid.Row="1" Margin="0 0 0 10" VerticalAlignment="Center">
+                                    <TextBlock Text="hexen.wad" HorizontalAlignment="Center" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 10" x:Name="display_hexen">
+                                        <TextBlock Text="IWAD found" />
+                                        <Image Width="25" Height="15">
+                                            <Image.Source>
+                                                <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_check.png"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button Content="Select" Grid.Row="2" x:Name="btn_hexen" />
+                            </Grid>
+                        </Border>
+                        
+                        <!--Strife-->
+                        <Border Padding="10 0 10 0" Grid.Column="2" Grid.Row="2">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="25" />
+                                </Grid.RowDefinitions>
+                                <Image Height="Auto" Margin="0 0 0 10" Grid.Row="0">
+                                    <Image.Source>
+                                        <BitmapImage DecodePixelWidth="100" UriSource="../img/img_strife.jpg"/>
+                                    </Image.Source>
+                                </Image>
+                                <StackPanel Grid.Row="1" Margin="0 0 0 10" VerticalAlignment="Center">
+                                    <TextBlock Text="strife1.wad" HorizontalAlignment="Center" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 10" x:Name="display_strife">
+                                        <TextBlock Text="IWAD found" />
+                                        <Image Width="25" Height="15">
+                                            <Image.Source>
+                                                <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_check.png"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button Content="Select" Grid.Row="2" x:Name="btn_strife" />
+                            </Grid>
+                        </Border>
+                        
+                        <!--Chex Quest-->
+                        <Border Padding="10 0 10 0" Grid.Column="3" Grid.Row="2">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="25" />
+                                </Grid.RowDefinitions>
+                                <Image Height="Auto" Margin="0 0 0 10" Grid.Row="0">
+                                    <Image.Source>
+                                        <BitmapImage DecodePixelWidth="100" UriSource="../img/img_chex.png"/>
+                                    </Image.Source>
+                                </Image>
+                                <StackPanel Grid.Row="1" Margin="0 0 0 10" VerticalAlignment="Center">
+                                    <TextBlock Text="chex.wad" HorizontalAlignment="Center" />
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 10" x:Name="display_chex">
+                                        <TextBlock Text="IWAD found" />
+                                        <Image Width="25" Height="15">
+                                            <Image.Source>
+                                                <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_check.png"/>
+                                            </Image.Source>
+                                        </Image>
+                                    </StackPanel>
+                                </StackPanel>
+                                <Button Content="Select" Grid.Row="2" x:Name="btn_chex" />
+                            </Grid>
+                        </Border>
+                        
+                        <!--Other IWADs-->
+                        <Border Padding="10" Grid.Row="3" Grid.ColumnSpan="4">
+                            <StackPanel HorizontalAlignment="Stretch">
+                                <TextBlock Text="Other IWADs" FontSize="15" FontWeight="Bold" Margin="0 0 0 10" />
+
+                                <DockPanel LastChildFill="False" Margin="0 0 0 10">
+                                    <TextBlock DockPanel.Dock="Left" Text="strife0.wad" />
+                                    <Button DockPanel.Dock="Right" Content="Select" />
+                                </DockPanel>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </ScrollViewer>
 </Page>

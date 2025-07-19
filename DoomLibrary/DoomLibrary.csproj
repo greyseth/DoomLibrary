@@ -9,6 +9,15 @@
 
   <ItemGroup>
     <None Remove="img\icon_add.png" />
+    <None Remove="img\icon_check.png" />
+    <None Remove="img\icon_cross.png" />
+    <None Remove="img\img_chex.png" />
+    <None Remove="img\img_doom.jpg" />
+    <None Remove="img\img_doom2.png" />
+    <None Remove="img\img_finaldoom.png" />
+    <None Remove="img\img_heretic.png" />
+    <None Remove="img\img_hexen.jpg" />
+    <None Remove="img\img_strife.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +37,15 @@
 
   <ItemGroup>
     <Resource Include="img\icon_add.png" />
+    <Resource Include="img\icon_check.png" />
+    <Resource Include="img\icon_cross.png" />
+    <Resource Include="img\img_chex.png" />
+    <Resource Include="img\img_doom.jpg" />
+    <Resource Include="img\img_doom2.png" />
+    <Resource Include="img\img_finaldoom.png" />
+    <Resource Include="img\img_heretic.png" />
+    <Resource Include="img\img_hexen.jpg" />
+    <Resource Include="img\img_strife.jpg" />
   </ItemGroup>
 
   <ItemGroup>
