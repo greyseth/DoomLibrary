@@ -9,6 +9,7 @@ namespace DoomLibrary.model
 {
     class ModsManager
     {
+        public static string selectedWad = "";
         public static List<Mod> allMods = new List<Mod>();
         public static int lastLoadOrder = 0;
 
