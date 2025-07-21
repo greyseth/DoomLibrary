@@ -19,5 +19,10 @@ namespace DoomLibrary.model
             this.Index = lastIndex;
             lastIndex++;
         }
+
+        public string Name
+        {
+            get { string[] pathSplit = Path.Split("\\"); return pathSplit[^1]; }
+        }
     }
 }

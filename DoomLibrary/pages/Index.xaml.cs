@@ -34,12 +34,42 @@ namespace DoomLibrary.pages
 
         bool showHidden = false;
 
+        public ObservableCollection<SourcePort> SourcePorts
+        {
+            get { return Settings.savedSettings != null ? Settings.savedSettings.sourcePorts : new ObservableCollection<SourcePort>(); }
+            set { Settings.savedSettings.sourcePorts = value; }
+        }
+
+        private SourcePort selectedSourcePort;
+        public SourcePort SelectedSourcePort
+        {
+            get { return selectedSourcePort; }
+            set { selectedSourcePort = value; }
+        }
+
         public Index()
         {
             DataContext = this;
             mods = new ObservableCollection<Mod>();
+            selectedSourcePort = new SourcePort();
 
             InitializeComponent();
+
+            // Source ports dropdown
+            if (Settings.savedSettings != null && Settings.savedSettings.sourcePorts.Count > 0)
+            {
+                selectedSourcePort = Settings.savedSettings.sourcePorts.FirstOrDefault();
+                input_sourcePorts.SelectedItem = selectedSourcePort;
+            }
+            else
+            {
+                input_sourcePorts.Visibility = Visibility.Collapsed;
+                display_sourcePortUnavailable.Visibility = Visibility.Visible;
+            }
+
+            // IWAD display
+            display_iwad.Click += (object sender, RoutedEventArgs e) => (Window.GetWindow(this) as MainWindow).AppContent.Navigate(new Uri("/pages/wads.xaml", UriKind.Relative));
+            display_iwad.Content = ModsManager.selectedWad != "" ? ModsManager.selectedWad : "Not Set";
 
             ReadModsDir();
 
@@ -66,11 +96,14 @@ namespace DoomLibrary.pages
                 foreach (Mod mod in mods) mod.LoadOrder = 0;
                 ModsManager.lastLoadOrder = 0;
             };
+
+            btn_modifyOrder.Click += (object sender, RoutedEventArgs e) => { };
+            btn_launch.Click += LaunchGame;
         }
 
         void ReadModsDir()
         {
-            if (Settings.savedSettings.modsLocation == "")
+            if (Settings.savedSettings == null || Settings.savedSettings.modsLocation == "")
             {
                 container_noFolder.Visibility = Visibility.Visible;
                 container_yesFolder.Visibility = Visibility.Collapsed;
@@ -121,7 +154,7 @@ namespace DoomLibrary.pages
             foundMod.Hidden = !foundMod.Hidden;
             mod.Hidden = foundMod.Hidden;
 
-            if (!showHidden && mod.Hidden == true)
+            if (!showHidden && mod.Hidden)
             {
                 mods.Remove(mod);
                 UpdateModsCount();
@@ -164,6 +197,21 @@ namespace DoomLibrary.pages
             {
                 display_noMods.Visibility = Visibility.Visible;
                 display_noMods.Text = "No Mods Found on " + Settings.savedSettings.modsLocation;
+            }
+        }
+
+        void LaunchGame(object sender, RoutedEventArgs e)
+        {
+            if (Settings.savedSettings == null || Settings.savedSettings.sourcePorts.Count < 1)
+            {
+                MessageBox.Show("You must select a source port"); 
+                return;
+            }
+
+            if (ModsManager.selectedWad == "")
+            {
+                MessageBox.Show("You must select a valid IWAD file");
+                return;
             }
         }
     }

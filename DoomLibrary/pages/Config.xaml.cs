@@ -41,7 +41,7 @@ namespace DoomLibrary.pages
 
             InitializeComponent();
 
-            SettingsObject so = Settings.savedSettings;
+            SettingsObject so = Settings.savedSettings != null ? Settings.savedSettings : Settings.NewEmpty();
             modsLocation = so.modsLocation;
             wadsLocation = so.wadsLocation;
             foreach(SourcePort sp in so.sourcePorts)

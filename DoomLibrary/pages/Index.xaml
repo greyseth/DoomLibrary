@@ -41,6 +41,32 @@
                     <TextBlock x:Name="display_noMods" TextAlignment="Center" Text="No Mods Found on C:\Users\Bla\Bla\Bla" Visibility="Collapsed" />
                 </StackPanel>
 
+                <Border DockPanel.Dock="Bottom" Padding="5" Background="DarkGray">
+                    <DockPanel LastChildFill="False">
+                        <StackPanel Orientation="Horizontal" Margin="0 0 10 0">
+                            <TextBlock Text="Source Port - " VerticalAlignment="Center" />
+                            <ComboBox ItemsSource="{Binding SourcePorts}" SelectedItem="{Binding SelectedSourcePort, Mode=TwoWay}" Visibility="Visible" x:Name="input_sourcePorts">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name, Mode=OneWay}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <TextBlock Text="Unavailable" VerticalAlignment="Center" Background="White" Padding="5 0 5 0" Visibility="Collapsed" x:Name="display_sourcePortUnavailable" />
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal" Margin="0 0 10 0">
+                            <TextBlock Text="IWAD - " VerticalAlignment="Center" />
+                            <Button Content="Not Set" VerticalAlignment="Center" Background="White" Padding="5 0 5 0" x:Name="display_iwad" />
+                        </StackPanel>
+
+                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                            <Button Content="Modify Load order" Margin="0 0 10 0" x:Name="btn_modifyOrder" />
+                            <Button Content="Launch Game" x:Name="btn_launch" />
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+
                 <ScrollViewer x:Name="container_listMods" Visibility="Collapsed">
                     <StackPanel>
                         <TextBlock x:Name="display_modsLocation" Text="Reading from folder C:\Bla\Bla\Bla" />

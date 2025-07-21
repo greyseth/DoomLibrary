@@ -35,6 +35,8 @@ namespace DoomLibrary
             string serialized = JsonSerializer.Serialize(settings);
             File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "\\config.json", serialized);
 
+            savedSettings = settings;
+
             MessageBox.Show("Saved Settings Data");
         }
 
@@ -49,6 +51,11 @@ namespace DoomLibrary
 
             savedSettings = deserialized;
             return deserialized;
+        }
+
+        public static SettingsObject NewEmpty()
+        {
+            return new SettingsObject("", "", new ObservableCollection<SourcePort>());
         }
     }
 }
