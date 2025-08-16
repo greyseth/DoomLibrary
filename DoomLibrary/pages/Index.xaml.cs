@@ -16,6 +16,7 @@ using System.Linq;
 using System.Diagnostics;
 using DoomLibrary.model;
 using DoomLibrary.commands;
+using System.ComponentModel;
 
 namespace DoomLibrary.pages
 {
@@ -47,10 +48,18 @@ namespace DoomLibrary.pages
             set { selectedSourcePort = value; }
         }
 
+        private ObservableCollection<Mod> appliedMods;
+        public ObservableCollection<Mod> AppliedMods
+        {
+            get { return appliedMods; }
+            set { appliedMods = value; }
+        }
+
         public Index()
         {
             DataContext = this;
             mods = new ObservableCollection<Mod>();
+            appliedMods = new ObservableCollection<Mod>();
             selectedSourcePort = new SourcePort();
 
             InitializeComponent();
@@ -97,8 +106,31 @@ namespace DoomLibrary.pages
                 ModsManager.lastLoadOrder = 0;
             };
 
-            btn_modifyOrder.Click += (object sender, RoutedEventArgs e) => { };
+            btn_modifyOrder.Click += (object sender, RoutedEventArgs e) =>
+            {
+                appliedMods.Clear();
+                foreach(Mod appliedMod in mods.ToList().Where<Mod>(m => m.LoadOrder > 0).OrderBy((m) => m.LoadOrder))
+                {
+                    appliedMods.Add(appliedMod);
+                }
+
+                appliedMods.ToList().Sort((a, b) => a.LoadOrder.CompareTo(b.LoadOrder));
+
+                container_loadOrder.Visibility = Visibility.Visible;
+
+                if (appliedMods.Count < 1)
+                {
+                    container_appliedMods.Visibility = Visibility.Collapsed;
+                    display_noAppliedMods.Visibility = Visibility.Visible;
+                }else
+                {
+                    container_appliedMods.Visibility = Visibility.Visible;
+                    display_noAppliedMods.Visibility = Visibility.Collapsed;
+                }
+            };
             btn_launch.Click += LaunchGame;
+
+            btn_closeLoadOrder.Click += (object sender, RoutedEventArgs e) => container_loadOrder.Visibility = Visibility.Collapsed;
         }
 
         void ReadModsDir()
@@ -144,7 +176,9 @@ namespace DoomLibrary.pages
             if (checkbox.IsChecked == true) ModsManager.ApplyMod(mod.name);
             else ModsManager.RemoveMod(mod.name);
 
-            Trace.WriteLine(System.Text.Json.JsonSerializer.Serialize(ModsManager.allMods));
+            //Trace.WriteLine(System.Text.Json.JsonSerializer.Serialize(ModsManager.allMods));
+
+            //Trace.WriteLine(AppliedMods.Count);
         }
 
         void ToggleHidden(object sender, RoutedEventArgs e)
@@ -213,6 +247,56 @@ namespace DoomLibrary.pages
                 MessageBox.Show("You must select a valid IWAD file");
                 return;
             }
+        }
+
+        void MoveLoadOrderDown(object sender, RoutedEventArgs e)
+        {   
+            Mod selectedMod = (sender as FrameworkElement).DataContext as Mod;
+            int selectedModIndex = appliedMods.ToList().FindIndex(m => m == selectedMod);
+
+            if (selectedModIndex == appliedMods.Count - 1) return;
+
+            int prevLoadOrder = appliedMods[selectedModIndex].LoadOrder;
+            int nextLoadOrder = appliedMods[selectedModIndex + 1].LoadOrder;
+
+            appliedMods[selectedModIndex].LoadOrder = nextLoadOrder;
+            appliedMods[selectedModIndex + 1].LoadOrder = prevLoadOrder;
+
+            ModsManager.allMods[ModsManager.allMods.ToList().FindIndex(m => m == appliedMods[selectedModIndex])].LoadOrder = nextLoadOrder;
+            ModsManager.allMods[ModsManager.allMods.ToList().FindIndex(m => m == appliedMods[selectedModIndex + 1])].LoadOrder = prevLoadOrder;
+
+            MoveLoadOrderUpdate();
+        }
+
+        void MoveLoadOrderUp(object sender, RoutedEventArgs e)
+        {
+            Mod selectedMod = (sender as FrameworkElement).DataContext as Mod;
+            int selectedModIndex = appliedMods.ToList().FindIndex(m => m == selectedMod);
+
+            if (selectedModIndex == 0) return;
+
+            int prevLoadOrder = appliedMods[selectedModIndex - 1].LoadOrder;
+            int curLoadOrder = appliedMods[selectedModIndex].LoadOrder;
+
+            appliedMods[selectedModIndex - 1].LoadOrder = curLoadOrder;
+            appliedMods[selectedModIndex].LoadOrder = prevLoadOrder;
+
+            ModsManager.allMods[ModsManager.allMods.ToList().FindIndex(m => m == appliedMods[selectedModIndex - 1])].LoadOrder = curLoadOrder;
+            ModsManager.allMods[ModsManager.allMods.ToList().FindIndex(m => m == appliedMods[selectedModIndex])].LoadOrder = prevLoadOrder;
+
+            MoveLoadOrderUpdate();
+        }
+
+        void MoveLoadOrderUpdate()
+        {
+            // Might be kinda slow, idk
+            var sorted = appliedMods.OrderBy(m => m.LoadOrder).ToList();
+
+            appliedMods.Clear();
+            foreach (var mod in sorted)
+                appliedMods.Add(mod);
+
+            list_modLoadOrder.Items.Refresh();
         }
     }
 }

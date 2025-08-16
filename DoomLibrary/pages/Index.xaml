@@ -9,87 +9,132 @@
       Title="Index">
 
     <Grid Background="LightGray">
-        <Border Padding="10" x:Name="container_noFolder" Visibility="Collapsed">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image Width="50" Height="50">
-                    <Image.Source>
-                        <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_add.png"/>
-                    </Image.Source>
-                </Image>
-                <TextBlock Text="You haven't set the mods directory&#x0a;Go to config to set it up" TextAlignment="Center" />
-            </StackPanel>
-        </Border>
-
-        <Border Padding="10" x:Name="container_yesFolder">
-            <DockPanel LastChildFill="True">
-                <Grid DockPanel.Dock="Top" Margin="0 0 0 10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="input_search"></TextBox>
-                    <Button Grid.Column="1" Content="Find Mod" x:Name="btn_search" />
-                </Grid>
-
-                <StackPanel DockPanel.Dock="Top">
-                    <StackPanel Orientation="Horizontal">
-                        <Button Content="Refresh List" x:Name="btn_refreshList" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="5 0 5 0" Margin="0 0 10 10" />
-                        <Button Content="Show Hidden" x:Name="btn_showHidden" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="5 0 5 0" Margin="0 0 10 10" />
-                        <Button Content="Unapply All" x:Name="btn_unapplyAll" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="5 0 5 0" Margin="0 0 10 10" />
-                    </StackPanel>
-
-                    <TextBlock x:Name="display_noMods" TextAlignment="Center" Text="No Mods Found on C:\Users\Bla\Bla\Bla" Visibility="Collapsed" />
+        <Grid>
+            <Border Padding="10" x:Name="container_noFolder" Visibility="Collapsed">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image Width="50" Height="50">
+                        <Image.Source>
+                            <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_add.png"/>
+                        </Image.Source>
+                    </Image>
+                    <TextBlock Text="You haven't set the mods directory&#x0a;Go to config to set it up" TextAlignment="Center" />
                 </StackPanel>
+            </Border>
 
-                <Border DockPanel.Dock="Bottom" Padding="5" Background="DarkGray">
-                    <DockPanel LastChildFill="False">
-                        <StackPanel Orientation="Horizontal" Margin="0 0 10 0">
-                            <TextBlock Text="Source Port - " VerticalAlignment="Center" />
-                            <ComboBox ItemsSource="{Binding SourcePorts}" SelectedItem="{Binding SelectedSourcePort, Mode=TwoWay}" Visibility="Visible" x:Name="input_sourcePorts">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding Name, Mode=OneWay}" />
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <TextBlock Text="Unavailable" VerticalAlignment="Center" Background="White" Padding="5 0 5 0" Visibility="Collapsed" x:Name="display_sourcePortUnavailable" />
+            <Border Padding="10" x:Name="container_yesFolder">
+                <DockPanel LastChildFill="True">
+                    <Grid DockPanel.Dock="Top" Margin="0 0 0 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="input_search"></TextBox>
+                        <Button Grid.Column="1" Content="Find Mod" x:Name="btn_search" />
+                    </Grid>
+
+                    <StackPanel DockPanel.Dock="Top">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Refresh List" x:Name="btn_refreshList" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="5 0 5 0" Margin="0 0 10 10" />
+                            <Button Content="Show Hidden" x:Name="btn_showHidden" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="5 0 5 0" Margin="0 0 10 10" />
+                            <Button Content="Unapply All" x:Name="btn_unapplyAll" HorizontalAlignment="Left" VerticalAlignment="Top" Padding="5 0 5 0" Margin="0 0 10 10" />
                         </StackPanel>
-                        
-                        <StackPanel Orientation="Horizontal" Margin="0 0 10 0">
-                            <TextBlock Text="IWAD - " VerticalAlignment="Center" />
-                            <Button Content="Not Set" VerticalAlignment="Center" Background="White" Padding="5 0 5 0" x:Name="display_iwad" />
-                        </StackPanel>
 
-                        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                            <Button Content="Modify Load order" Margin="0 0 10 0" x:Name="btn_modifyOrder" />
-                            <Button Content="Launch Game" x:Name="btn_launch" />
-                        </StackPanel>
-                    </DockPanel>
-                </Border>
-
-                <ScrollViewer x:Name="container_listMods" Visibility="Collapsed">
-                    <StackPanel>
-                        <TextBlock x:Name="display_modsLocation" Text="Reading from folder C:\Bla\Bla\Bla" />
-                        <ListView x:Name="list_mods" ItemsSource="{Binding Mods}" HorizontalContentAlignment="Stretch">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <CheckBox Margin="5" Click="ToggleMod" IsChecked="{Binding IsApplied, Mode=OneWay}" />
-                                        <TextBlock Text="{Binding name, Mode=OneWay}" VerticalAlignment="Center" Grid.Column="1" />
-                                        <Button Content="{Binding HiddenText, Mode=OneWay}" Margin="5 0 0 0" Grid.Column="2" Click="ToggleHidden" />
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                        <TextBlock x:Name="display_noMods" TextAlignment="Center" Text="No Mods Found on C:\Users\Bla\Bla\Bla" Visibility="Collapsed" />
                     </StackPanel>
-                </ScrollViewer>
-            </DockPanel>
-        </Border>
+
+                    <Border DockPanel.Dock="Bottom" Padding="5" Background="DarkGray">
+                        <DockPanel LastChildFill="False">
+                            <StackPanel Orientation="Horizontal" Margin="0 0 10 0">
+                                <TextBlock Text="Source Port - " VerticalAlignment="Center" />
+                                <ComboBox ItemsSource="{Binding SourcePorts}" SelectedItem="{Binding SelectedSourcePort, Mode=TwoWay}" Visibility="Visible" x:Name="input_sourcePorts">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name, Mode=OneWay}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <TextBlock Text="Unavailable" VerticalAlignment="Center" Background="White" Padding="5 0 5 0" Visibility="Collapsed" x:Name="display_sourcePortUnavailable" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0 0 10 0">
+                                <TextBlock Text="IWAD - " VerticalAlignment="Center" />
+                                <Button Content="Not Set" VerticalAlignment="Center" Background="White" Padding="5 0 5 0" x:Name="display_iwad" />
+                            </StackPanel>
+
+                            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                                <Button Content="Modify Load order" Margin="0 0 10 0" x:Name="btn_modifyOrder" />
+                                <Button Content="Launch Game" x:Name="btn_launch" />
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+
+                    <ScrollViewer x:Name="container_listMods" Visibility="Collapsed">
+                        <StackPanel>
+                            <TextBlock x:Name="display_modsLocation" Text="Reading from folder C:\Bla\Bla\Bla" />
+                            <ListView x:Name="list_mods" ItemsSource="{Binding Mods}" HorizontalContentAlignment="Stretch">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <CheckBox Margin="5" Click="ToggleMod" IsChecked="{Binding IsApplied, Mode=OneWay}" />
+                                            <TextBlock Text="{Binding name, Mode=OneWay}" VerticalAlignment="Center" Grid.Column="1" />
+                                            <Button Content="{Binding HiddenText, Mode=OneWay}" Margin="5 0 0 0" Grid.Column="2" Click="ToggleHidden" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+        </Grid>
+
+        <Grid x:Name="container_loadOrder" Background="#80000000" Visibility="Collapsed" >
+            <Border VerticalAlignment="Center" HorizontalAlignment="Center" Padding="10" Background="White">
+                <StackPanel>
+                    <DockPanel LastChildFill="False" Margin="0 0 0 10">
+                        <TextBlock Text="Modify Mod Load Order" VerticalAlignment="Center" Margin="0 0 10 0" />
+                        <Button DockPanel.Dock="Right" Background="Transparent" BorderThickness="0" x:Name="btn_closeLoadOrder">
+                            <Image Width="15" Height="15">
+                                <Image.Source>
+                                    <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_cross.png"  />
+                                </Image.Source>
+                            </Image>
+                        </Button>
+                    </DockPanel>
+
+                    <DockPanel LastChildFill="False" Background="LightGray" Width="300">
+                        <TextBlock DockPanel.Dock="Left" Text="Mod Name" />
+                        <TextBlock DockPanel.Dock="Right" Text="Load Order" Margin="0 0 20 0" />
+                    </DockPanel>
+                    <ScrollViewer Height="300" x:Name="container_appliedMods" Visibility="Collapsed">
+                        <StackPanel>
+                            <ListView x:Name="list_modLoadOrder" ItemsSource="{Binding AppliedMods}" HorizontalContentAlignment="Stretch">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderThickness="2" BorderBrush="LightGray" Width="300">
+                                            <DockPanel>
+                                                <Button DockPanel.Dock="Right" Width="25" Content="↓" Click="MoveLoadOrderDown" />
+                                                <Button DockPanel.Dock="Right" Width="25" Content="↑" Click="MoveLoadOrderUp" />
+                                                <TextBlock Text="{Binding LoadOrder, Mode=OneWay}" />
+                                                <TextBlock Text="{Binding name, Mode=OneWay}" />
+                                            </DockPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackPanel>
+                    </ScrollViewer>
+                    <Border BorderThickness="2" BorderBrush="LightGray" Width="300" x:Name="display_noAppliedMods">
+                        <TextBox Text="You haven't applied any mods" TextAlignment="Center" />
+                    </Border>
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </Page>
