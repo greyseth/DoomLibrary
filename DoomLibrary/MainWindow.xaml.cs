@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DoomLibrary.model;
 
 namespace DoomLibrary
 {
@@ -25,6 +26,7 @@ namespace DoomLibrary
             InitializeComponent();
 
             Settings.LoadSettings();
+            ModsManager.LoadMods();
         }
 
         private void ToIndex(object sender, RoutedEventArgs e)

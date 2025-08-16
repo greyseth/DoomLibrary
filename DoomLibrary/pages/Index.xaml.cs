@@ -55,6 +55,11 @@ namespace DoomLibrary.pages
             set { appliedMods = value; }
         }
 
+        public string GetSelectedWad
+        {
+            get { return ModsManager.selectedWad != "" ? ModsManager.selectedWad : "Not Set"; }
+        }
+
         public Index()
         {
             DataContext = this;
@@ -78,7 +83,7 @@ namespace DoomLibrary.pages
 
             // IWAD display
             display_iwad.Click += (object sender, RoutedEventArgs e) => (Window.GetWindow(this) as MainWindow).AppContent.Navigate(new Uri("/pages/wads.xaml", UriKind.Relative));
-            display_iwad.Content = ModsManager.selectedWad != "" ? ModsManager.selectedWad : "Not Set";
+            //display_iwad.Content = ModsManager.selectedWad != "" ? ModsManager.selectedWad : "Not Set";
 
             ReadModsDir();
 
@@ -247,6 +252,8 @@ namespace DoomLibrary.pages
                 MessageBox.Show("You must select a valid IWAD file");
                 return;
             }
+
+            ModsManager.SaveMods();
         }
 
         void MoveLoadOrderDown(object sender, RoutedEventArgs e)

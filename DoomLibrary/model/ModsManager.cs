@@ -55,32 +55,35 @@ namespace DoomLibrary.model
 
         public static void SaveMods()
         {
-            string serialized = JsonSerializer.Serialize(new ModsManagerSerializer(allMods, lastLoadOrder));
+            string serialized = JsonSerializer.Serialize(new ModsManagerSerializer(selectedWad, allMods, lastLoadOrder));
             File.WriteAllText(AppDomain.CurrentDomain.BaseDirectory + "\\mods.json", serialized);
         }
 
         public static void LoadMods()
         {
-            ModsManagerSerializer deserialized = new ModsManagerSerializer(new List<Mod>(), 0);
+            ModsManagerSerializer deserialized = new ModsManagerSerializer("", new List<Mod>(), 0);
             if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "\\mods.json"))
             {
-                string json = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "\\config.json");
+                string json = File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + "\\mods.json");
                 deserialized = JsonSerializer.Deserialize<ModsManagerSerializer>(json);
             }
 
+            selectedWad = deserialized.selectedWad;
             allMods = deserialized.allMods;
             lastLoadOrder = deserialized.lastLoadOrder;
         }
     }
 
     class ModsManagerSerializer {
-        public List<Mod> allMods;
-        public int lastLoadOrder;
+        public string selectedWad { get; set; }
+        public List<Mod> allMods { get; set; }
+        public int lastLoadOrder { get; set; }
 
         public ModsManagerSerializer() { }
 
-        public ModsManagerSerializer(List<Mod> allMods, int lastLoadOrder)
+        public ModsManagerSerializer(string selectedWad, List<Mod> allMods, int lastLoadOrder)
         {
+            this.selectedWad = selectedWad;
             this.allMods = allMods;
             this.lastLoadOrder = lastLoadOrder;
         }

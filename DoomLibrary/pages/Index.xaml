@@ -58,7 +58,7 @@
 
                             <StackPanel Orientation="Horizontal" Margin="0 0 10 0">
                                 <TextBlock Text="IWAD - " VerticalAlignment="Center" />
-                                <Button Content="Not Set" VerticalAlignment="Center" Background="White" Padding="5 0 5 0" x:Name="display_iwad" />
+                                <Button Content="{Binding GetSelectedWad, Mode=OneWay}" VerticalAlignment="Center" Background="White" Padding="5 0 5 0" x:Name="display_iwad" />
                             </StackPanel>
 
                             <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
@@ -121,7 +121,6 @@
                                             <DockPanel>
                                                 <Button DockPanel.Dock="Right" Width="25" Content="↓" Click="MoveLoadOrderDown" />
                                                 <Button DockPanel.Dock="Right" Width="25" Content="↑" Click="MoveLoadOrderUp" />
-                                                <TextBlock Text="{Binding LoadOrder, Mode=OneWay}" />
                                                 <TextBlock Text="{Binding name, Mode=OneWay}" />
                                             </DockPanel>
                                         </Border>
