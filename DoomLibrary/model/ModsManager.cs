@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace DoomLibrary.model
 {
     class ModsManager
     {
-        public static string selectedWad = "";
+        public static string selectedWad = ""; 
         public static List<Mod> allMods = new List<Mod>();
         public static int lastLoadOrder = 0;
 
@@ -37,6 +38,8 @@ namespace DoomLibrary.model
             }
 
             lastLoadOrder = biggestModifiedLoadOrder;
+
+            Trace.WriteLine(JsonSerializer.Serialize(allMods));
         }
 
         public static int GetLoadOrder(string mod)

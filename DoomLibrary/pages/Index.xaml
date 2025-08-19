@@ -104,7 +104,7 @@
                                 <Image.Source>
                                     <BitmapImage DecodePixelWidth="100" UriSource="../img/icon_cross.png"  />
                                 </Image.Source>
-                            </Image>
+                            </Image> 
                         </Button>
                     </DockPanel>
 

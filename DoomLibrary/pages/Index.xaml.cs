@@ -178,6 +178,7 @@ namespace DoomLibrary.pages
             CheckBox checkbox = sender as CheckBox;
             Mod mod = (sender as FrameworkElement).DataContext as Mod;
 
+            // TODO: Add changes to reflect changes in appliedMods
             if (checkbox.IsChecked == true) ModsManager.ApplyMod(mod.name);
             else ModsManager.RemoveMod(mod.name);
 
@@ -254,10 +255,42 @@ namespace DoomLibrary.pages
             }
 
             ModsManager.SaveMods();
+
+            // Launch command builder
+            string executable = selectedSourcePort.Path;
+            string iwad = "-iwad ";
+            string files = "-file ";
+
+            iwad += Settings.savedSettings.wadsLocation + "\\" + ModsManager.selectedWad;
+
+            var sorted = ModsManager.allMods.Where(m => m.LoadOrder > 0).OrderBy(m => m.LoadOrder).ToList();
+            foreach(Mod mod in sorted)
+            {
+                files += Settings.savedSettings.modsLocation + "\\" + mod.name + " ";
+            }
+
+            Trace.WriteLine($"{iwad} {files}");
+            return;
+
+            Process process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = executable,
+                    Arguments = $"{iwad} {files}",
+                    UseShellExecute = false,
+                    CreateNoWindow = false
+                }
+            };
+
+            process.Start();
         }
 
         void MoveLoadOrderDown(object sender, RoutedEventArgs e)
-        {   
+        {
+            Trace.WriteLine(System.Text.Json.JsonSerializer.Serialize(appliedMods));
+            //return;
+            
             Mod selectedMod = (sender as FrameworkElement).DataContext as Mod;
             int selectedModIndex = appliedMods.ToList().FindIndex(m => m == selectedMod);
 
@@ -269,8 +302,8 @@ namespace DoomLibrary.pages
             appliedMods[selectedModIndex].LoadOrder = nextLoadOrder;
             appliedMods[selectedModIndex + 1].LoadOrder = prevLoadOrder;
 
-            ModsManager.allMods[ModsManager.allMods.ToList().FindIndex(m => m == appliedMods[selectedModIndex])].LoadOrder = nextLoadOrder;
-            ModsManager.allMods[ModsManager.allMods.ToList().FindIndex(m => m == appliedMods[selectedModIndex + 1])].LoadOrder = prevLoadOrder;
+            ModsManager.allMods[ModsManager.allMods.ToList().FindIndex(m => m.name == appliedMods[selectedModIndex].name)].LoadOrder = nextLoadOrder;
+            ModsManager.allMods[ModsManager.allMods.ToList().FindIndex(m => m.name == appliedMods[selectedModIndex + 1].name)].LoadOrder = prevLoadOrder;
 
             MoveLoadOrderUpdate();
         }
@@ -288,8 +321,8 @@ namespace DoomLibrary.pages
             appliedMods[selectedModIndex - 1].LoadOrder = curLoadOrder;
             appliedMods[selectedModIndex].LoadOrder = prevLoadOrder;
 
-            ModsManager.allMods[ModsManager.allMods.ToList().FindIndex(m => m == appliedMods[selectedModIndex - 1])].LoadOrder = curLoadOrder;
-            ModsManager.allMods[ModsManager.allMods.ToList().FindIndex(m => m == appliedMods[selectedModIndex])].LoadOrder = prevLoadOrder;
+            ModsManager.allMods[ModsManager.allMods.ToList().FindIndex(m => m.name == appliedMods[selectedModIndex - 1].name)].LoadOrder = curLoadOrder;
+            ModsManager.allMods[ModsManager.allMods.ToList().FindIndex(m => m.name == appliedMods[selectedModIndex].name)].LoadOrder = prevLoadOrder;
 
             MoveLoadOrderUpdate();
         }
